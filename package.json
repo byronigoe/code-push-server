@@ -65,7 +65,7 @@
     "slash": "3.0.0",
     "upyun": "3.4.4",
     "validator": "13.6.0",
-    "yargs": "17.1.1",
+    "yargs": "17.2.1",
     "yazl": "2.5.1"
   },
   "devDependencies": {
