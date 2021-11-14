@@ -52,7 +52,7 @@
     "lodash": "4.17.21",
     "log4js": "6.3.0",
     "moment": "2.29.1",
-    "mysql2": "2.3.0",
+    "mysql2": "2.3.3",
     "node-fetch": "2.6.1",
     "nodemailer": "6.6.3",
     "pug": "3.0.2",
