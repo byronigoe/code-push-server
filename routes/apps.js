@@ -640,7 +640,7 @@ router.delete('/:appName/collaborators/:email', middleware.checkToken, (req, res
     var email = _.trim(decodeURI(req.params.email));
     var uid = req.users.id;
     if (!validator.isEmail(email)) {
-        return res.status(406).send('Invalid Email!');
+        return res.status(406).send('Invalid email');
     }
     var collaborators = new Collaborators();
     accountManager
@@ -648,7 +648,7 @@ router.delete('/:appName/collaborators/:email', middleware.checkToken, (req, res
         .then((col) => {
             return accountManager.findUserByEmail(email).then((data) => {
                 if (_.eq(data.id, uid)) {
-                    throw new AppError.AppError("can't delete yourself!");
+                    throw new AppError.AppError("You cannot delete yourself");
                 } else {
                     return collaborators.deleteCollaborator(col.appid, data.id);
                 }
@@ -692,7 +692,7 @@ router.patch('/:appName', middleware.checkToken, (req, res, next) => {
     var appName = _.trim(req.params.appName);
     var uid = req.users.id;
     if (_.isEmpty(newAppName)) {
-        return res.status(406).send('Please input name!');
+        return res.status(406).send('Please enter a name');
     } else {
         var appManager = new AppManager();
         return accountManager
@@ -700,7 +700,7 @@ router.patch('/:appName', middleware.checkToken, (req, res, next) => {
             .then((col) => {
                 return appManager.findAppByName(uid, newAppName).then((appInfo) => {
                     if (!_.isEmpty(appInfo)) {
-                        throw new AppError.AppError(newAppName + ' Exist!');
+                        throw new AppError.AppError(newAppName + ' already exists');
                     }
                     return appManager.modifyApp(col.appid, { name: newAppName });
                 });
@@ -723,14 +723,14 @@ router.post('/:appName/transfer/:email', middleware.checkToken, (req, res, next)
     var email = _.trim(req.params.email);
     var uid = req.users.id;
     if (!validator.isEmail(email)) {
-        return res.status(406).send('Invalid Email!');
+        return res.status(406).send('Invalid email');
     }
     return accountManager
         .ownerCan(uid, appName)
         .then((col) => {
             return accountManager.findUserByEmail(email).then((data) => {
                 if (_.eq(data.id, uid)) {
-                    throw new AppError.AppError("You can't transfer to yourself!");
+                    throw new AppError.AppError("You cannot transfer to yourself");
                 }
                 var appManager = new AppManager();
                 return appManager.transferApp(col.appid, uid, data.id);
@@ -753,7 +753,7 @@ router.post('/', middleware.checkToken, (req, res, next) => {
     var constName = require('../core/const');
     var appName = req.body.name;
     if (_.isEmpty(appName)) {
-        return res.status(406).send('Please input name!');
+        return res.status(406).send('Please enter a name');
     }
     var osName = _.toLower(req.body.os);
     var os;
@@ -764,7 +764,7 @@ router.post('/', middleware.checkToken, (req, res, next) => {
     } else if (osName == _.toLower(constName.WINDOWS_NAME)) {
         os = constName.WINDOWS;
     } else {
-        return res.status(406).send('Please input os [iOS|Android|Windows]!');
+        return res.status(406).send('Please choose OS [iOS|Android|Windows]');
     }
     var platformName = _.toLower(req.body.platform);
     var platform;
@@ -773,7 +773,7 @@ router.post('/', middleware.checkToken, (req, res, next) => {
     } else if (platformName == _.toLower(constName.CORDOVA_NAME)) {
         platform = constName.CORDOVA;
     } else {
-        return res.status(406).send('Please input platform [React-Native|Cordova]!');
+        return res.status(406).send('Please choose platform [React-Native|Cordova]');
     }
     var manuallyProvisionDeployments = req.body.manuallyProvisionDeployments;
     var uid = req.users.id;
@@ -783,7 +783,7 @@ router.post('/', middleware.checkToken, (req, res, next) => {
         .findAppByName(uid, appName)
         .then((appInfo) => {
             if (!_.isEmpty(appInfo)) {
-                throw new AppError.AppError(appName + ' Exist!');
+                throw new AppError.AppError(appName + ' already exists');
             }
             return appManager.addApp(uid, appName, os, platform, req.users.identical).then(() => {
                 return {

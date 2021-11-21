@@ -19,7 +19,7 @@ router.post('/', (req, res, next) => {
         .checkRegisterCode(email, token)
         .then((u) => {
             if (_.isString(password) && password.length < 6) {
-                throw new AppError.AppError('请您输入6～20位长度的密码');
+                throw new AppError.AppError('Please enter a password with a length of 6-20 digits');
             }
             return accountManager.register(email, password);
         })
@@ -40,7 +40,7 @@ router.get('/exists', (req, res, next) => {
     models.Users.findOne({ where: { email: email } })
         .then((u) => {
             if (!email) {
-                throw new AppError.AppError(`请您输入邮箱地址`);
+                throw new AppError.AppError(`Please enter your email address`);
             }
             res.send({ status: 'OK', exists: u ? true : false });
         })
@@ -88,7 +88,7 @@ router.get('/registerCode/exists', (req, res, next) => {
         });
 });
 
-//修改密码
+// Change password
 router.patch('/password', middleware.checkToken, (req, res, next) => {
     var oldPassword = _.trim(_.get(req, 'body.oldPassword'));
     var newPassword = _.trim(_.get(req, 'body.newPassword'));

@@ -52,7 +52,7 @@ proto.addCollaborator = function (appId, uid) {
                 roles: 'Collaborator',
             });
         } else {
-            throw new AppError.AppError('user already is Collaborator.');
+            throw new AppError.AppError('User is already a Collaborator');
         }
     });
 };
@@ -60,7 +60,7 @@ proto.addCollaborator = function (appId, uid) {
 proto.deleteCollaborator = function (appId, uid) {
     return models.Collaborators.findOne({ where: { appid: appId, uid: uid } }).then((data) => {
         if (_.isEmpty(data)) {
-            throw new AppError.AppError('user is not a Collaborator');
+            throw new AppError.AppError('User is not a Collaborator');
         } else {
             return models.Collaborators.destroy({ where: { id: data.id } });
         }

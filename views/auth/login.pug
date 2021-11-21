@@ -5,16 +5,16 @@ block css
 block content
   .container
     form#form.form-signin(method="post")
-      h2.form-signin-heading 请登录
-      label.sr-only(for="inputEmail") 邮箱地址／用户名
-      input#inputEmail.form-control(type="text" name="account" placeholder="邮箱地址／用户名" required autofocus)
-      label.sr-only(for="inputPassword") 密码
-      input#inputPassword.form-control(type="password" name="password" placeholder="密码" required)
+      h2.form-signin-heading Please sign in
+      label.sr-only(for="inputEmail") Email/Username
+      input#inputEmail.form-control(type="text" name="account" placeholder="Email" value=email required autofocus=email ? false : true)
+      label.sr-only(for="inputPassword") Password
+      input#inputPassword.form-control(type="password" name="password" placeholder="Password" required autofocus=email ? true : false)
       .checkbox
         label
           input(type="checkbox" value="remember-me")
-          span 记住我
-      a#submitBtn.btn.btn-lg.btn-primary.btn-block 登录
+          span Remember me
+      a#submitBtn.btn.btn-lg.btn-primary.btn-block Log in
 
 block js
   script().
@@ -41,4 +41,3 @@ block js
         }
       });
     });
-

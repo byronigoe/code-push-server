@@ -72,7 +72,7 @@ security.packageHashSync = function (jsonData) {
     return security.stringSha256Sync(manifestString);
 };
 
-//参数为buffer或者readableStream或者文件路径
+// The parameter is buffer or readableStream or file path
 security.qetag = function (buffer) {
     if (typeof buffer === 'string') {
         try {

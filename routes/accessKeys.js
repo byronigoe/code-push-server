@@ -33,7 +33,7 @@ router.post('/', middleware.checkToken, (req, res, next) => {
     log.debug(req.body);
     var newAccessKey = security.randToken(28).concat(identical);
     return accountManager
-        .isExsitAccessKeyName(uid, friendlyName)
+        .isExistAccessKeyName(uid, friendlyName)
         .then((data) => {
             if (!_.isEmpty(data)) {
                 throw new AppError.AppError(`The access key "${friendlyName}"  already exists.`);

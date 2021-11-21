@@ -23,7 +23,7 @@ proto.existDeloymentName = function (appId, name) {
         where: { appid: appId, name: name },
     }).then((data) => {
         if (!_.isEmpty(data)) {
-            throw new AppError.AppError(name + ' name does Exist!');
+            throw new AppError.AppError(name + ' already exists');
         } else {
             return data;
         }
@@ -34,7 +34,7 @@ proto.addDeloyment = function (name, appId, uid) {
     var self = this;
     return models.Users.findByPk(uid).then((user) => {
         if (_.isEmpty(user)) {
-            throw new AppError.AppError("can't find user");
+            throw new AppError.AppError("Cannot find user");
         }
         return self.existDeloymentName(appId, name).then(() => {
             var identical = user.identical;
@@ -59,7 +59,7 @@ proto.renameDeloymentByName = function (deploymentName, appId, newName) {
             if (_.gt(affectedCount, 0)) {
                 return { name: newName };
             } else {
-                throw new AppError.AppError(`does not find the deployment "${deploymentName}"`);
+                throw new AppError.AppError(`Cannot find the deployment "${deploymentName}"`);
             }
         });
     });
@@ -72,7 +72,7 @@ proto.deleteDeloymentByName = function (deploymentName, appId) {
         if (_.gt(rowNum, 0)) {
             return { name: `${deploymentName}` };
         } else {
-            throw new AppError.AppError(`does not find the deployment "${deploymentName}"`);
+            throw new AppError.AppError(`Cannot find the deployment "${deploymentName}"`);
         }
     });
 };
