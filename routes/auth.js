@@ -31,8 +31,13 @@ router.get('/register', (req, res) => {
         log.debug(`register redirect:${codePushWebUrl}`);
         res.redirect(`${codePushWebUrl}/register`);
     } else {
-        res.render('auth/login', { title: 'CodePushServer' });
+        res.render('auth/register', { title: 'CodePushServer', email: req.query.email || '' });
     }
+});
+
+router.get('/confirm', (req, res) => {
+    log.debug(`confirmation form`);
+    res.render('auth/confirm', { title: 'CodePushServer', email: req.query.email || '' });
 });
 
 router.post('/logout', (req, res) => {
