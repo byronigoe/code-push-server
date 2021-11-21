@@ -74,7 +74,7 @@ proto.getAllAccessKeyByUid = function (uid) {
     });
 };
 
-proto.isExsitAccessKeyName = function (uid, friendlyName) {
+proto.isExistAccessKeyName = function (uid, friendlyName) {
     return models.UserTokens.findOne({
         where: { uid: uid, name: friendlyName },
     });
@@ -98,10 +98,10 @@ const LOGIN_LIMIT_PRE = 'LOGIN_LIMIT_PRE_';
 
 proto.login = function (account, password) {
     if (_.isEmpty(account)) {
-        return Promise.reject(new AppError.AppError('请您输入邮箱地址'));
+        return Promise.reject(new AppError.AppError('Please enter your email address'));
     }
     if (_.isEmpty(password)) {
-        return Promise.reject(new AppError.AppError('请您输入密码'));
+        return Promise.reject(new AppError.AppError('Please enter your password'));
     }
     var where = {};
     if (validator.isEmail(account)) {
@@ -113,7 +113,7 @@ proto.login = function (account, password) {
     return models.Users.findOne({ where: where })
         .then((users) => {
             if (_.isEmpty(users)) {
-                throw new AppError.AppError('您输入的邮箱或密码有误');
+                throw new AppError.AppError('The email or password you entered is incorrect');
             }
             return users;
         })
@@ -125,7 +125,7 @@ proto.login = function (account, password) {
                     .get(loginKey)
                     .then((loginErrorTimes) => {
                         if (loginErrorTimes > tryLoginTimes) {
-                            throw new AppError.AppError(`您输入密码错误次数超过限制，帐户已经锁定`);
+                            throw new AppError.AppError(`The number of times you have entered the wrong password has exceeded the limit, and the account has been locked`);
                         }
                         return users;
                     })
@@ -154,7 +154,7 @@ proto.login = function (account, password) {
                         })
                         .finally(() => client.quit());
                 }
-                throw new AppError.AppError('您输入的邮箱或密码有误');
+                throw new AppError.AppError('The email or password you entered is incorrect');
             } else {
                 return users;
             }
@@ -167,16 +167,16 @@ const EXPIRED_SPEED = 10;
 
 proto.sendRegisterCode = function (email) {
     if (_.isEmpty(email)) {
-        return Promise.reject(new AppError.AppError('请您输入邮箱地址'));
+        return Promise.reject(new AppError.AppError('Please enter your email address'));
     }
     return models.Users.findOne({ where: { email: email } })
         .then((u) => {
             if (u) {
-                throw new AppError.AppError(`"${email}" 已经注册过，请更换邮箱注册`);
+                throw new AppError.AppError(`"${email}" already registered`);
             }
         })
         .then(() => {
-            //将token临时存储到redis
+            // Store the token temporarily in redis
             var token = security.randToken(40);
             var client = factory.getRedisClient('default');
             return client
@@ -187,7 +187,7 @@ proto.sendRegisterCode = function (email) {
                 .finally(() => client.quit());
         })
         .then((token) => {
-            //将token发送到用户邮箱
+            // Send token to user by email
             var emailManager = new EmailManager();
             return emailManager.sendRegisterCode(email, token);
         });
@@ -197,7 +197,7 @@ proto.checkRegisterCode = function (email, token) {
     return models.Users.findOne({ where: { email: email } })
         .then((u) => {
             if (u) {
-                throw new AppError.AppError(`"${email}" 已经注册过，请更换邮箱注册`);
+                throw new AppError.AppError(`"${email}" already registered. Please login instead`);
             }
         })
         .then(() => {
@@ -205,7 +205,7 @@ proto.checkRegisterCode = function (email, token) {
             var client = factory.getRedisClient('default');
             return client.get(registerKey).then((storageToken) => {
                 if (_.isEmpty(storageToken)) {
-                    throw new AppError.AppError(`验证码已经失效，请您重新获取`);
+                    throw new AppError.AppError(`The verification code has expired, please obtain another`);
                 }
                 if (!_.eq(token, storageToken)) {
                     client
@@ -217,7 +217,7 @@ proto.checkRegisterCode = function (email, token) {
                             return ttl;
                         })
                         .finally(() => client.quit());
-                    throw new AppError.AppError(`您输入的验证码不正确，请重新输入`);
+                    throw new AppError.AppError(`The verification code you entered is incorrect, please re-enter`);
                 }
                 return storageToken;
             });
@@ -228,7 +228,7 @@ proto.register = function (email, password) {
     return models.Users.findOne({ where: { email: email } })
         .then((u) => {
             if (u) {
-                throw new AppError.AppError(`"${email}" 已经注册过，请更换邮箱注册`);
+                throw new AppError.AppError(`"${email}" already registered`);
             }
         })
         .then(() => {
@@ -243,19 +243,19 @@ proto.register = function (email, password) {
 
 proto.changePassword = function (uid, oldPassword, newPassword) {
     if (!_.isString(newPassword) || newPassword.length < 6) {
-        return Promise.reject(new AppError.AppError('请您输入6～20位长度的新密码'));
+        return Promise.reject(new AppError.AppError('Please enter a new password with a length of 6-20 characters'));
     }
     return models.Users.findOne({ where: { id: uid } })
         .then((u) => {
             if (!u) {
-                throw new AppError.AppError(`未找到用户信息`);
+                throw new AppError.AppError(`User information not found`);
             }
             return u;
         })
         .then((u) => {
             var isEq = security.passwordVerifySync(oldPassword, u.get('password'));
             if (!isEq) {
-                throw new AppError.AppError(`您输入的旧密码不正确，请重新输入`);
+                throw new AppError.AppError(`The old password you entered is incorrect, please re-enter`);
             }
             u.set('password', security.passwordHashSync(newPassword));
             u.set('ack_code', security.randToken(5));

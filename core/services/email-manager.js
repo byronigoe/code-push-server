@@ -12,7 +12,7 @@ var proto = (module.exports = function () {
 proto.sendMail = function (options) {
     return new Promise((resolve, reject) => {
         if (!_.get(options, 'to')) {
-            return reject(new AppError.AppError('to是必传参数'));
+            return reject(new AppError.AppError(`"To" is a required parameter`));
         }
         var smtpConfig = _.get(config, 'smtpConfig');
         if (!smtpConfig || !smtpConfig.host) {
@@ -39,6 +39,6 @@ proto.sendMail = function (options) {
 proto.sendRegisterCode = function (email, code) {
     return proto.sendMail({
         to: email,
-        html: `<div>您接收的验证码为: <em style="color:red;">${code}</em>  20分钟内有效</div>`,
+        html: `<div>Your verification code is: <em style="color:red;">${code}</em><br>It is valid for 20 minutes.</div>`,
     });
 };

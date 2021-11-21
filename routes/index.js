@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/tokens', (req, res) => {
-    res.render('tokens', { title: '获取token' });
+    res.render('tokens', { title: 'Obtain token' });
 });
 
 router.get('/updateCheck', (req, res, next) => {
@@ -26,7 +26,6 @@ router.get('/updateCheck', (req, res, next) => {
     clientManager
         .updateCheckFromCache(deploymentKey, appVersion, label, packageHash, clientUniqueId)
         .then((rs) => {
-            //灰度检测
             return clientManager
                 .chosenMan(rs.packageId, rs.rollout, clientUniqueId)
                 .then((data) => {

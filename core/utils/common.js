@@ -201,7 +201,7 @@ common.unzipFile = async function (zipFile, outputPath) {
         log.debug(`unzipFile success`);
     } catch (err) {
         log.error(err);
-        throw new AppError.AppError(`it's not a zipFile`);
+        throw new AppError.AppError(`It's not a zipFile`);
     }
     return outputPath;
 };
@@ -236,11 +236,11 @@ common.uploadFileToLocal = function (key, filePath) {
     return new Promise((resolve, reject) => {
         var storageDir = _.get(config, 'local.storageDir');
         if (!storageDir) {
-            throw new AppError.AppError('please set config local storageDir');
+            throw new AppError.AppError('Please set config local.storageDir');
         }
         if (key.length < 3) {
             log.error(`generate key is too short, key value:${key}`);
-            throw new AppError.AppError('generate key is too short.');
+            throw new AppError.AppError('Generate key is too short');
         }
         try {
             log.debug(`uploadFileToLocal check directory ${storageDir} fs.R_OK`);
@@ -258,7 +258,7 @@ common.uploadFileToLocal = function (key, filePath) {
         }
         var stats = fs.statSync(storageDir);
         if (!stats.isDirectory()) {
-            var e = new AppError.AppError(`${storageDir} must be directory`);
+            var e = new AppError.AppError(`${storageDir} must be a directory`);
             log.error(e);
             throw e;
         }
@@ -274,7 +274,7 @@ common.uploadFileToLocal = function (key, filePath) {
         }
         stats = fs.statSync(filePath);
         if (!stats.isFile()) {
-            var e = new AppError.AppError(`${filePath} must be file`);
+            var e = new AppError.AppError(`${filePath} must be a file`);
             log.error(e);
             throw e;
         }
@@ -368,7 +368,7 @@ common.uploadFileToUpyun = function (key, filePath) {
             .makeDir(storageDir)
             .then((result) => {
                 if (!storageDir) {
-                    reject(new AppError.AppError('Please config the upyun remoteDir!'));
+                    reject(new AppError.AppError('Please config the upyun remoteDir'));
                     return;
                 }
                 let remotePath = storageDir + '/' + key;
@@ -382,7 +382,7 @@ common.uploadFileToUpyun = function (key, filePath) {
                             resolve(key);
                         } else {
                             log.debug('uploadFileToUpyun putFile failed!', data);
-                            reject(new AppError.AppError('Upload file to upyun failed!'));
+                            reject(new AppError.AppError('Upload file to upyun failed'));
                         }
                     })
                     .catch((e1) => {

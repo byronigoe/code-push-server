@@ -41,7 +41,7 @@ proto.getPackageInfo = function (packageHash) {
         var contentPath = path.join(packageHashPath, CONTENTS_NAME);
         return this.buildPackageInfo(packageHash, packageHashPath, contentPath, manifestFile);
     } else {
-        throw new AppError.AppError("can't get PackageInfo");
+        throw new AppError.AppError("Cannot get PackageInfo");
     }
 };
 
@@ -60,7 +60,7 @@ proto.validateStore = function (providePackageHash) {
     var manifestFile = path.join(packageHashPath, MANIFEST_FILE_NAME);
     var contentPath = path.join(packageHashPath, CONTENTS_NAME);
     if (!this.hasPackageStoreSync(providePackageHash)) {
-        log.debug(`validateStore providePackageHash not exist`);
+        log.debug(`validateStore providePackageHash does not exist`);
         return Promise.resolve(false);
     }
     return security.calcAllFileSha256(contentPath).then((manifestJson) => {
@@ -69,7 +69,7 @@ proto.validateStore = function (providePackageHash) {
         try {
             var manifestJsonLocal = JSON.parse(fs.readFileSync(manifestFile));
         } catch (e) {
-            log.debug(`validateStore manifestFile contents invilad`);
+            log.debug(`validateStore manifestFile contents invalid`);
             return false;
         }
         var packageHashLocal = security.packageHashSync(manifestJsonLocal);

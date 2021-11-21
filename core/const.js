@@ -28,8 +28,8 @@ define('IS_MANDATORY_NO', 0);
 define('IS_DISABLED_YES', 1);
 define('IS_DISABLED_NO', 0);
 
-define('RELEAS_EMETHOD_PROMOTE', 'Promote');
-define('RELEAS_EMETHOD_UPLOAD', 'Upload');
+define('RELEASE_METHOD_PROMOTE', 'Promote');
+define('RELEASE_METHOD_UPLOAD', 'Upload');
 
 define('DEPLOYMENT_SUCCEEDED', 1);
 define('DEPLOYMENT_FAILED', 2);

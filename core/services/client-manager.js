@@ -61,7 +61,7 @@ proto.updateCheckFromCache = function (
         .then((data) => {
             if (data) {
                 try {
-                    log.debug('updateCheckFromCache read from catch');
+                    log.debug('updateCheckFromCache read from cache');
                     var obj = JSON.parse(data);
                     return obj;
                 } catch (e) {}
@@ -148,7 +148,7 @@ proto.updateCheck = function (deploymentKey, appVersion, label, packageHash, cli
     return models.Deployments.findOne({ where: { deployment_key: deploymentKey } })
         .then((dep) => {
             if (_.isEmpty(dep)) {
-                throw new AppError.AppError('Not found deployment, check deployment key is right.');
+                throw new AppError.AppError('Deployment not found, check deployment key is right.');
             }
             var version = common.parseVersion(appVersion);
             return models.DeploymentsVersions.findAll({
@@ -205,7 +205,7 @@ proto.updateCheck = function (deploymentKey, appVersion, label, packageHash, cli
                     return packages;
                 })
                 .then((packages) => {
-                    // 尝试增量更新
+                    // Attempt to update incrementally
                     if (
                         packageHash &&
                         !_.isEmpty(packages) &&
@@ -240,18 +240,18 @@ proto.updateCheck = function (deploymentKey, appVersion, label, packageHash, cli
 
 proto.getPackagesInfo = function (deploymentKey, label) {
     if (_.isEmpty(deploymentKey) || _.isEmpty(label)) {
-        return Promise.reject(new AppError.AppError('please input deploymentKey and label'));
+        return Promise.reject(new AppError.AppError('Please input deploymentKey and label'));
     }
     return models.Deployments.findOne({ where: { deployment_key: deploymentKey } })
         .then((dep) => {
             if (_.isEmpty(dep)) {
-                throw new AppError.AppError('does not found deployment');
+                throw new AppError.AppError('Deployment not found');
             }
             return models.Packages.findOne({ where: { deployment_id: dep.id, label: label } });
         })
         .then((packages) => {
             if (_.isEmpty(packages)) {
-                throw new AppError.AppError('does not found packages');
+                throw new AppError.AppError('Packages not found');
             }
             return packages;
         });
