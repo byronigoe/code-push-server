@@ -16,7 +16,7 @@ router.get('/login', (req, res) => {
         log.debug(`login redirect:${codePushWebUrl}`);
         res.redirect(`${codePushWebUrl}/login`);
     } else {
-        res.render('auth/login', { title: 'CodePushServer' });
+        res.render('auth/login', { title: 'CodePushServer', email: req.query.email || '' });
     }
 });
 
