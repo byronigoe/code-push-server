@@ -31,7 +31,11 @@ router.get('/register', (req, res) => {
         log.debug(`register redirect:${codePushWebUrl}`);
         res.redirect(`${codePushWebUrl}/register`);
     } else {
-        res.render('auth/register', { title: 'CodePushServer', email: req.query.email || '' });
+        if (_.get(config, 'common.allowRegistration')) {
+          res.render('auth/register', { title: 'CodePushServer', email: req.query.email || '' });
+        } else {
+          res.redirect(`/auth/login`);
+        }
     }
 });
 

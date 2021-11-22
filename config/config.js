@@ -68,6 +68,8 @@ config.development = {
         tokenSecret: process.env.TOKEN_SECRET || 'INSERT_RANDOM_TOKEN_KEY',
     },
     common: {
+        // determine whether new account registrations are allowed
+        allowRegistration: false,
         /*
          * tryLoginTimes is control login error times to avoid force attack.
          * if value is 0, no limit for login auth, it may not safe for account. when it's a number, it means you can
