@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/shm-open/code-push-server/compare/v1.1.0...v1.1.1) (2021-11-23)
+
+
+### Bug Fixes
+
+* make all config items accessible with environment variables ([187c198](https://github.com/shm-open/code-push-server/commit/187c198bc84acaf835c84f434438a8eb40720ad1))
+* use unified log level config and config it by LOG_LEVEL ([6699127](https://github.com/shm-open/code-push-server/commit/66991276444efcabd2d8b08244f7e459df9ef4e3))
+
+## [1.1.0](https://github.com/shm-open/code-push-server/compare/v1.0.6...v1.1.0) (2021-11-23)
+
+
+### Features
+
+* check config flag `common.allowRegistration` to allow registration ([53ffab6](https://github.com/shm-open/code-push-server/commit/53ffab6a2b18abd9468a87370c2300bf27fc27ec))
+
+
+### Bug Fixes
+
+* **deps:** update dependency aliyun-sdk to v1.12.4 ([5c7b64f](https://github.com/shm-open/code-push-server/commit/5c7b64fe3022af76f1ccad34efaeac027b3e37c8))
+* **deps:** update dependency aws-sdk to v2.1034.0 ([a57da57](https://github.com/shm-open/code-push-server/commit/a57da57e05070306df5b17ddae3c6ab9f92ebe74))
+* **deps:** update dependency aws-sdk to v2.975.0 ([ce7eb3f](https://github.com/shm-open/code-push-server/commit/ce7eb3f86e4f31b8172fc93500d4c6f209a26d37))
+* **deps:** update dependency aws-sdk to v2.976.0 ([e598d4b](https://github.com/shm-open/code-push-server/commit/e598d4b07676615f02514ede88f071d2534bd091))
+* **deps:** update dependency aws-sdk to v2.978.0 ([1ff838c](https://github.com/shm-open/code-push-server/commit/1ff838c85bfc96744943621dcee54abbdb20c76e))
+* **deps:** update dependency aws-sdk to v2.979.0 ([f046a22](https://github.com/shm-open/code-push-server/commit/f046a22864429000a3d43537a683c7dbb911a3f2))
+* **deps:** update dependency cookie-parser to v1.4.6 ([82858f7](https://github.com/shm-open/code-push-server/commit/82858f78d70abecd52c68300cfad3b64a091ee7e))
+* **deps:** update dependency cos-nodejs-sdk-v5 to v2.11.2 ([1ca57d5](https://github.com/shm-open/code-push-server/commit/1ca57d5000436ca84a48caefff994864ed5a422d))
+* **deps:** update dependency formidable to v1.2.6 ([8b6efad](https://github.com/shm-open/code-push-server/commit/8b6efad55800db13a4f79f6d4950516adae94ee2))
+* **deps:** update dependency mysql2 to v2.3.3 ([eafe186](https://github.com/shm-open/code-push-server/commit/eafe1864808502aafab6404624a75a640a96fc51))
+* **deps:** update dependency node-fetch to v2.6.6 ([885a88a](https://github.com/shm-open/code-push-server/commit/885a88a23fa35a43cbb24f0b3058fb80a932361d))
+* **deps:** update dependency nodemailer to v6.7.1 ([521061a](https://github.com/shm-open/code-push-server/commit/521061abfe34bceae6da244f03855f842ad3e67f))
+* **deps:** update dependency sequelize to v6.11.0 ([5d1d791](https://github.com/shm-open/code-push-server/commit/5d1d791b17da2fa7eb6be52576ac03d91bef3d28))
+* **deps:** update dependency validator to v13.7.0 ([2d8c47e](https://github.com/shm-open/code-push-server/commit/2d8c47e26b12f9f351a9fc9045754635d7ded4e3))
+* **deps:** update dependency yargs to v17.2.1 ([76052d6](https://github.com/shm-open/code-push-server/commit/76052d68fcdaa27ccc631b305639c00760ae400d))
+* **deps:** update formidable to v2 ([9949913](https://github.com/shm-open/code-push-server/commit/9949913c4014e29c294bddc283a9cb706c324f62))
+* handle registration and confirmation ([b8b0276](https://github.com/shm-open/code-push-server/commit/b8b0276f4a54199ce66fb646b327d323a434c7cc))
+
 ### [1.0.6](https://github.com/shm-open/code-push-server/compare/v1.0.5...v1.0.6) (2021-08-23)
 
 

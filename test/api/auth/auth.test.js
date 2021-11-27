@@ -35,8 +35,21 @@ describe('api/auth/test.js', function () {
     });
 
     describe('sign up view', function (done) {
+        it('should show sign in redirect view if sign up not enabled', function (done) {
+            _.set(config, 'common.allowRegistration', false);
+            request
+                .get('/auth/register')
+                .send()
+                .end(function (err, res) {
+                    should.not.exist(err);
+                    res.status.should.equal(302);
+                    done();
+                });
+        });
+
         it('should show sign up redirect view successful', function (done) {
             _.set(config, 'common.codePushWebUrl', 'http://127.0.0.1:3001');
+            _.set(config, 'common.allowRegistration', true);
             request
                 .get('/auth/register')
                 .send()
@@ -49,6 +62,7 @@ describe('api/auth/test.js', function () {
 
         it('should show sign up view successful', function (done) {
             _.set(config, 'common.codePushWebUrl', null);
+            _.set(config, 'common.allowRegistration', true);
             request
                 .get('/auth/register')
                 .send()

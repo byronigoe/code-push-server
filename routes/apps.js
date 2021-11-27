@@ -11,9 +11,6 @@ var PackageManager = require('../core/services/package-manager');
 var AppError = require('../core/app-error');
 var common = require('../core/utils/common');
 var config = require('../core/config');
-const REGEX = /^(\w+)(-android|-ios)$/;
-const REGEX_ANDROID = /^(\w+)(-android)$/;
-const REGEX_IOS = /^(\w+)(-ios)$/;
 var log4js = require('log4js');
 var log = log4js.getLogger('cps:apps');
 
@@ -303,7 +300,7 @@ router.post(
                         return packageManager
                             .parseReqFile(req)
                             .then((data) => {
-                                if (data.package.type != 'application/zip') {
+                                if (data.package.mimetype != 'application/zip') {
                                     log.debug(`upload file type is invlidate`, data.package);
                                     throw new AppError.AppError('upload file type is invalidate');
                                 }
@@ -313,11 +310,11 @@ router.post(
                                         deploymentInfo.appid,
                                         deploymentInfo.id,
                                         data.packageInfo,
-                                        data.package.path,
+                                        data.package.filepath,
                                         uid,
                                     )
                                     .finally(() => {
-                                        common.deleteFolderSync(data.package.path);
+                                        common.deleteFolderSync(data.package.filepath);
                                     });
                             })
                             .then((packages) => {
