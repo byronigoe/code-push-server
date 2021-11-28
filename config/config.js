@@ -88,11 +88,7 @@ config.development = {
     },
     common: {
         // determine whether new account registrations are allowed
-<<<<<<< HEAD
-        allowRegistration: false,
-=======
         allowRegistration: toBool(process.env.ALLOW_REGISTRATION),
->>>>>>> upstream/master
         /*
          * tryLoginTimes is control login error times to avoid force attack.
          * if value is 0, no limit for login auth, it may not safe for account. when it's a number, it means you can
