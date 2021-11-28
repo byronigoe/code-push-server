@@ -45,15 +45,14 @@ proto.findLatestPackageInfoByDeployVersion = function (deploymentsVersionsId) {
 proto.parseReqFile = function (req) {
     log.debug('parseReqFile');
     return new Promise((resolve, reject) => {
-        var form = new formidable.IncomingForm();
-        form.maxFieldsSize = 200 * 1024 * 1024;
+        var form = formidable();
         form.parse(req, (err, fields, files) => {
             if (err) {
                 log.debug('parseReqFile:', err);
                 reject(new AppError.AppError('Upload error'));
             } else {
                 log.debug('parseReqFile fields:', fields);
-                log.debug('parseReqFile file location:', _.get(files, 'package.path'));
+                log.debug('parseReqFile file location:', _.get(files, 'package.filepath'));
                 if (_.isEmpty(fields.packageInfo) || _.isEmpty(_.get(files, 'package'))) {
                     log.debug('parseReqFile upload info lack');
                     reject(new AppError.AppError('Missing package info'));

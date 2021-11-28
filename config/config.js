@@ -1,5 +1,17 @@
 var os = require('os');
 
+function toBool(str) {
+    return str === 'true' || str === '1';
+}
+
+function toNumber(str, defaultValue) {
+    var num = Number(str);
+    if (Number.isNaN(num)) {
+        return defaultValue;
+    }
+    return num;
+}
+
 var config = {};
 config.development = {
     // Config for database, only support mysql.
@@ -14,10 +26,10 @@ config.development = {
     },
     // Config for qiniu (http://www.qiniu.com/) cloud storage when storageType value is "qiniu".
     qiniu: {
-        accessKey: '',
-        secretKey: '',
-        bucketName: '',
-        downloadUrl: '', // Binary files download host address.
+        accessKey: process.env.QINIU_ACCESS_KEY,
+        secretKey: process.env.QINIU_SECRET_KEY,
+        bucketName: process.env.QINIU_BUCKET_NAME,
+        downloadUrl: process.env.QINIU_DOWNLOAD_URL || process.env.DOWNLOAD_URL,
     },
     // Config for upyun (https://www.upyun.com/) storage when storageType value is "upyun"
     upyun: {
@@ -25,16 +37,17 @@ config.development = {
         serviceName: process.env.UPYUN_SERVICE_NAME,
         operatorName: process.env.UPYUN_OPERATOR_NAME,
         operatorPass: process.env.UPYUN_OPERATOR_PASS,
-        downloadUrl: process.env.DOWNLOAD_URL,
+        downloadUrl: process.env.UPYUN_DOWNLOAD_URL || process.env.DOWNLOAD_URL,
     },
     // Config for Amazon s3 (https://aws.amazon.com/cn/s3/) storage when storageType value is "s3".
     s3: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
         sessionToken: process.env.AWS_SESSION_TOKEN, //(optional)
-        bucketName: process.env.BUCKET_NAME,
-        region: process.env.REGION,
-        downloadUrl: process.env.DOWNLOAD_URL, // binary files download host address.
+        bucketName: process.env.AWS_BUCKET_NAME,
+        region: process.env.AWS_REGION,
+        // binary files download host address.
+        downloadUrl: process.env.AWS_DOWNLOAD_URL || process.env.DOWNLOAD_URL,
     },
     // Config for Aliyun OSS (https://www.aliyun.com/product/oss) when storageType value is "oss".
     oss: {
@@ -42,23 +55,29 @@ config.development = {
         secretAccessKey: process.env.OSS_SECRET_ACCESS_KEY,
         endpoint: process.env.OSS_ENDPOINT,
         bucketName: process.env.OSS_BUCKET_NAME,
-        prefix: process.env.OSS_PREFIX, // Key prefix in object key
-        downloadUrl: process.env.OSS_DOWNLOAD_URL, // binary files download host address.
+        // Key prefix in object key
+        prefix: process.env.OSS_PREFIX,
+        // binary files download host address
+        downloadUrl: process.env.OSS_DOWNLOAD_URL || process.env.DOWNLOAD_URL,
     },
     // Config for tencentyun COS (https://cloud.tencent.com/product/cos) when storageType value is "oss".
     tencentcloud: {
-        accessKeyId: '',
-        secretAccessKey: '',
-        bucketName: '',
-        region: '',
-        downloadUrl: '', // binary files download host address.
+        accessKeyId: process.env.COS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.COS_SECRET_ACCESS_KEY,
+        bucketName: process.env.COS_BUCKET_NAME,
+        region: process.env.COS_REGION,
+        // binary files download host address
+        downloadUrl: process.env.COS_DOWNLOAD_URL || process.env.DOWNLOAD_URL,
     },
     // Config for local storage when storageType value is "local".
     local: {
         // Binary files storage dir, Do not use tmpdir and it's public download dir.
         storageDir: process.env.STORAGE_DIR || os.tmpdir(),
         // Binary files download host address which Code Push Server listen to. the files storage in storageDir.
-        downloadUrl: process.env.LOCAL_DOWNLOAD_URL || 'http://127.0.0.1:3000/download',
+        downloadUrl:
+            process.env.LOCAL_DOWNLOAD_URL ||
+            process.env.DOWNLOAD_URL ||
+            'http://127.0.0.1:3000/download',
         // public static download spacename.
         public: '/download',
     },
@@ -68,33 +87,36 @@ config.development = {
         tokenSecret: process.env.TOKEN_SECRET || 'INSERT_RANDOM_TOKEN_KEY',
     },
     common: {
+        // determine whether new account registrations are allowed
+        allowRegistration: toBool(process.env.ALLOW_REGISTRATION),
         /*
          * tryLoginTimes is control login error times to avoid force attack.
          * if value is 0, no limit for login auth, it may not safe for account. when it's a number, it means you can
          * try that times today. but it need config redis server.
          */
-        tryLoginTimes: 4,
-        // CodePush Web(https://github.com/lisong/code-push-web) login address.
-        //codePushWebUrl: "http://127.0.0.1:3001/login",
+        tryLoginTimes: toNumber(process.env.TRY_LOGIN_TIMES, 4),
         // create patch updates's number. default value is 3
-        diffNums: 3,
+        diffNums: toNumber(process.env.DIFF_NUMS, 3),
         // data dir for caclulate diff files. it's optimization.
         dataDir: process.env.DATA_DIR || os.tmpdir(),
         // storageType which is your binary package files store. options value is ("local" | "qiniu" | "s3"| "oss" || "tencentcloud")
         storageType: process.env.STORAGE_TYPE || 'local',
         // options value is (true | false), when it's true, it will cache updateCheck results in redis.
-        updateCheckCache: false,
+        updateCheckCache: toBool(process.env.UPDATE_CHECK_CACHE),
         // options value is (true | false), when it's true, it will cache rollout results in redis
-        rolloutClientUniqueIdCache: false,
+        rolloutClientUniqueIdCache: toBool(process.env.ROLLOUT_CLIENT_UNIQUE_ID_CACHE),
+
+        // CodePush Web(https://github.com/lisong/code-push-web) login address.
+        //codePushWebUrl: "http://127.0.0.1:3001/login",
     },
     // Config for smtp email，register module need validate user email project source https://github.com/nodemailer/nodemailer
     smtpConfig: {
-        host: '',
-        port: 465,
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT || 465,
         secure: true,
         auth: {
-            user: '',
-            pass: '',
+            user: process.env.SMTP_USERNAME,
+            pass: process.env.SMTP_PASSWORD,
         },
     },
     // Config for redis (register module, tryLoginTimes module)
@@ -127,9 +149,7 @@ config.development = {
 config.development.log4js = {
     appenders: { console: { type: 'console' } },
     categories: {
-        default: { appenders: ['console'], level: 'error' },
-        startup: { appenders: ['console'], level: 'info' },
-        http: { appenders: ['console'], level: 'info' },
+        default: { appenders: ['console'], level: process.env.LOG_LEVEL || 'info' },
     },
 };
 

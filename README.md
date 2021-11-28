@@ -42,7 +42,7 @@ The default account, setup by the database initialization is:
 -   username: `admin`
 -   password: `123456`
 
-Create your own account by visiting https://your-server.com/auth/register
+Create your own account by visiting https://your-server.com/auth/register (in config.js make sure common.allowRegistration is set to true)
 
 ## How to Use
 
