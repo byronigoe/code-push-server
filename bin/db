@@ -11,13 +11,13 @@ var constConfig = require('../core/const');
 var yargs = require('yargs');
 var argv = yargs
     .usage('Usage: $0 <command> [options]')
-    .command('init', '初始化数据库', {
+    .command('init', 'Initialize the database', {
         dbpassword: {
             alias: 'dbpassword',
             type: 'string',
         },
     })
-    .command('upgrade', '升级数据库', {
+    .command('upgrade', 'Upgrade the database', {
         dbpassword: {
             alias: 'dbpassword',
             type: 'string',
@@ -25,11 +25,11 @@ var argv = yargs
     })
     .example(
         '$0 init --dbname codepush --dbhost localhost --dbuser root --dbpassword 123456 --dbport 3306 --force',
-        '初始化code-push-server数据库',
+        'Initialize the code-push-server database',
     )
     .example(
         '$0 upgrade --dbname codepush --dbhost localhost --dbuser root --dbpassword 123456 --dbport 3306',
-        '升级code-push-server数据库',
+        'Upgrade the code-push-server database',
     )
     .default({
         dbname: 'codepush',
