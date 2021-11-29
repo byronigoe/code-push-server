@@ -71,7 +71,7 @@ config.development = {
     },
     // Config for local storage when storageType value is "local".
     local: {
-        // Binary files storage dir, Do not use tmpdir and it's public download dir.
+        // Binary files storage dir, Do not use tmpdir and its public download dir.
         storageDir: process.env.STORAGE_DIR || os.tmpdir(),
         // Binary files download host address which Code Push Server listen to. the files storage in storageDir.
         downloadUrl:
@@ -90,14 +90,15 @@ config.development = {
         // determine whether new account registrations are allowed
         allowRegistration: toBool(process.env.ALLOW_REGISTRATION),
         /*
-         * tryLoginTimes is control login error times to avoid force attack.
-         * if value is 0, no limit for login auth, it may not safe for account. when it's a number, it means you can
-         * try that times today. but it need config redis server.
+         * tryLoginTimes limits login error attempts to avoid force attack.
+         * if value is 0, no limit for login auth, it may not be safe.
+         * when it's a number, it means you can try that many times today,
+         * but it needs a redis server.
          */
         tryLoginTimes: toNumber(process.env.TRY_LOGIN_TIMES, 4),
         // create patch updates's number. default value is 3
         diffNums: toNumber(process.env.DIFF_NUMS, 3),
-        // data dir for caclulate diff files. it's optimization.
+        // data dir to calculate diff files. it's optimization.
         dataDir: process.env.DATA_DIR || os.tmpdir(),
         // storageType which is your binary package files store. options value is ("local" | "qiniu" | "s3"| "oss" || "tencentcloud")
         storageType: process.env.STORAGE_TYPE || 'local',
@@ -105,11 +106,9 @@ config.development = {
         updateCheckCache: toBool(process.env.UPDATE_CHECK_CACHE),
         // options value is (true | false), when it's true, it will cache rollout results in redis
         rolloutClientUniqueIdCache: toBool(process.env.ROLLOUT_CLIENT_UNIQUE_ID_CACHE),
-
-        // CodePush Web(https://github.com/lisong/code-push-web) login address.
-        //codePushWebUrl: "http://127.0.0.1:3001/login",
     },
-    // Config for smtp email，register module need validate user email project source https://github.com/nodemailer/nodemailer
+    // Config for smtp email; register module needs to validate user email
+    // project source https://github.com/nodemailer/nodemailer
     smtpConfig: {
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT || 465,

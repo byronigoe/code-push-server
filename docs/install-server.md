@@ -1,6 +1,6 @@
 ## INSTALL NODE AND NPM
 
-[see](https://nodejs.org/en/download/)
+[Node Downloads](https://nodejs.org/en/download/)
 
 > (choose latest LTS version)
 
@@ -22,7 +22,7 @@ $ sudo npm i -g pm2
 ## GET code-push-server FROM NPM
 
 ```shell
-$ npm install @byronigoe/code-push-server@latest -g
+$ npm install byronigoe/code-push-server -g
 ```
 
 ## GET code-push-server FROM SOURCE CODE
@@ -35,42 +35,66 @@ $ npm install
 
 # GET Redis
 
+```shell
+yum install redis.x86_64
+```
 [Redis for Windows](https://github.com/microsoftarchive/redis/releases)
 
 ## INIT DATABASE
 
+Create a MySQL user, e.g.
 ```shell
-$ code-push-server-db init --dbhost "your mysql host" --dbport "your mysql port"  --dbuser "your mysql user" --dbpassword "your mysql password"
+CREATE USER 'codepush'@'localhost' IDENTIFIED BY 'create_a_password';
+```
+
+Grant appropriate permissions, e.g.
+```shell
+GRANT ALL PRIVILEGES ON codepush . * TO 'codepush'@'localhost';
+```
+
+Full command
+```shell
+$ code-push-server-db init --dbhost "your mysql host" --dbport "your mysql port" --dbname "your database" --dbuser "your mysql user" --dbpassword "your mysql password"
+```
+
+Defaults (if omitted) are:
+| dbhost | localhost |
+| dbport | 3306 |
+| dbname | codepush |
+| dbuser | root |
+
+Minimally
+```shell
+$ code-push-server-db init --dbpassword "your mysql root password"
 ```
 
 or from source code
 
 ```shell
-$ ./bin/db init --dbhost "your mysql host" --dbport "your mysql port"  --dbuser "your mysql user" --dbpassword "your mysql password"
+$ ./bin/db init --dbhost "your mysql host" --dbport "your mysql port" --dbname "your database" --dbuser "your mysql user" --dbpassword "your mysql password"
 ```
 
 > output: success
 
 ## CONFIGURE for code-push-server
 
-save the file [config.js](https://github.com/byronigoe/code-push-server/blob/master/config/config.js)
+Save the file [config.js](https://github.com/byronigoe/code-push-server/blob/master/config/config.js) and modify the properties, or set the corresponding environment variables (e.g. in process.json).
 
-some config have to change:
-
--   `local`.`storageDir` change to your directory,make sure have read/write permissions.
--   `local`.`downloadUrl` replace `127.0.0.1` to your machine ip.
--   `common`.`dataDir` change to your directory,make sure have read/write permissions.
--   `jwt`.`tokenSecret` get the random string from `https://www.grc.com/passwords.htm`, and replace the value `INSERT_RANDOM_TOKEN_KEY`.
--   `db` config: `username`,`password`,`host`,`port` change your own's
+-   `local`.`storageDir` change to your directory, make sure you have read/write permissions.
+-   `local`.`downloadUrl` replace `127.0.0.1` to your machine's IP.
+-   `common`.`dataDir` change to your directory, make sure you have read/write permissions.
+-   `jwt`.`tokenSecret` get a random string from `https://www.grc.com/passwords.htm`, and replace the value `INSERT_RANDOM_TOKEN_KEY`.
+-   `db` config: `username`,`password`,`host`,`port` set the environment variables, or change them in this file.
+-   `smtpConfig` config: `host`,`auth.user`,`auth.pass` needed if you enable `common.allowRegistration`
 
 ## CONFIGURE for pm2
 
-save the file [process.json](https://github.com/byronigoe/code-push-server/blob/master/docs/process.json)
+Save the file [process.json](https://github.com/byronigoe/code-push-server/blob/master/process.json)
 
-some config have to change:
+Some configuration properties have to change:
 
 -   `script` if you install code-push-server from npm use `code-push-server`, or use `"your source code dir"/bin/www`
--   `CONFIG_FILE` above config.js file path, use absolute path.
+-   `CONFIG_FILE` absolute path to the config.js you downloaded.
 
 ## START SERVICE
 
@@ -81,7 +105,7 @@ $ pm2 start process.json
 ## RESTART SERVICE
 
 ```shell
-$ pm2 restart process.json
+$ pm2 reload process.json
 ```
 
 ## STOP SERVICE

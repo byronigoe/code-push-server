@@ -7,7 +7,9 @@
       "instances": "max", // Number of open instances, 'max' is the number of cpu cores
       "exec_mode": "cluster", // Cluster mode to maximize website concurrency
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "PORT": 3000,
+        "CONFIG_FILE": "/path/to/config.js"
       }
     }
   ]
