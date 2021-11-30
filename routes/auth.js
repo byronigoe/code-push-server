@@ -21,7 +21,7 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/link', (req, res) => {
-    res.redirect(`/auth/login`);
+    res.redirect(req.app.locals.baseUrl + `auth/login`);
 });
 
 router.get('/register', (req, res) => {
@@ -34,7 +34,7 @@ router.get('/register', (req, res) => {
         if (_.get(config, 'common.allowRegistration')) {
           res.render('auth/register', { title: 'CodePushServer', email: req.query.email || '' });
         } else {
-          res.redirect(`/auth/login`);
+          res.redirect(req.app.locals.baseUrl + `auth/login`);
         }
     }
 });
