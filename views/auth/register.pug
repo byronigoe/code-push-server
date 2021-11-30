@@ -1,6 +1,6 @@
 extends ../layout
 block css
-  link(rel='stylesheet', href='/stylesheets/signin.css')
+  link(rel='stylesheet', href='stylesheets/signin.css')
 
 block content
   .container
@@ -22,13 +22,13 @@ block js
       $.ajax({
         type: 'post',
         data: $('#form').serializeArray(),
-        url: "/users/registerCode",
+        url: "users/registerCode",
         dataType: 'json',
         success: function (data) {
             if (data.status == "OK") {
               let email = $('#inputEmail').val();
               sessionStorage.setItem('email', email);
-              location.href = '/auth/confirm?email=' + email;
+              location.href = 'auth/confirm?email=' + email;
               submit = false;
             } else {
               alert(data.message);

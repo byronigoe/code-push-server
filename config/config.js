@@ -89,6 +89,8 @@ config.development = {
     common: {
         // determine whether new account registrations are allowed
         allowRegistration: toBool(process.env.ALLOW_REGISTRATION),
+        // value of <base href=""> for subfolder deployment, e.g. '/code-push/'
+        baseUrl: process.env.BASE_URL || '/',
         /*
          * tryLoginTimes limits login error attempts to avoid force attack.
          * if value is 0, no limit for login auth, it may not be safe.

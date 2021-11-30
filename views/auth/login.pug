@@ -1,6 +1,6 @@
 extends ../layout
 block css
-  link(rel='stylesheet', href='/stylesheets/signin.css')
+  link(rel='stylesheet', href='stylesheets/signin.css')
 
 block content
   .container
@@ -33,7 +33,7 @@ block js
           if (data.status == "OK") {
             sessionStorage.setItem('auth', data.results.tokens)
             submit = false;
-            location.href = '/tokens/' + location.search;
+            location.href = 'tokens/' + location.search;
           } else {
             alert(data.errorMessage);
             submit = false;

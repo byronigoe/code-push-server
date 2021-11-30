@@ -1,11 +1,11 @@
 extends layout
 block css
-  link(rel='stylesheet', href='/stylesheets/index.css')
+  link(rel='stylesheet', href='stylesheets/index.css')
 
 block content
   .site-notice CodePush Server
   h1(style="text-align: center;")= title
   p(style="text-align: center;") Welcome to #{title}
   .site-notice
-    a.btn.btn-primary(href="/auth/login" type="button") Log In
-    a.btn.btn-primary.col-md-offset-1(href="/auth/password" type="button") Change Password
+    a.btn.btn-primary(href="auth/login" type="button") Log In
+    a.btn.btn-primary.col-md-offset-1(href="auth/password" type="button") Change Password

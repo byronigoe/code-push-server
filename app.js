@@ -27,6 +27,7 @@ app.use(
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.locals.baseUrl = _.get(config, 'common.baseUrl');
 
 app.use(
     log4js.connectLogger(log4js.getLogger('http'), {

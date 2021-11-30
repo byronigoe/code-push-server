@@ -1,6 +1,6 @@
 extends layout
 block css
-  link(rel='stylesheet', href='/stylesheets/tokens.css')
+  link(rel='stylesheet', href='stylesheets/tokens.css')
 
 block content
   h1(style="text-align: center;")= title
@@ -56,7 +56,7 @@ block js
         headers: {
           Authorization : 'Bearer '+access_token
         },
-        url: '/accessKeys',
+        url: 'accessKeys',
         dataType: 'json',
         success: function (data) {
           submit = false;
@@ -69,7 +69,7 @@ block js
           submit = false;
           if (errorThrown == 'Unauthorized') {
             alert('Please login again');
-            location.href = '/auth/login';
+            location.href = 'auth/login';
           }else {
             alert(errorThrown);
           }

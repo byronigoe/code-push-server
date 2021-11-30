@@ -1,6 +1,6 @@
 extends ../layout
 block css
-  link(rel='stylesheet', href='/stylesheets/signin.css')
+  link(rel='stylesheet', href='stylesheets/signin.css')
 
 block content
   .container
@@ -32,10 +32,10 @@ block js
   script().
     var submit = false;
     $('#inputEmail').on('click', function () {
-      location.href = '/auth/register?email=' + $('#inputEmail').val();
+      location.href = 'auth/register?email=' + $('#inputEmail').val();
     });
     $('#okBtn').on('click', function () {
-      location.href = '/auth/login?email=' + $('#inputEmail').val();
+      location.href = 'auth/login?email=' + $('#inputEmail').val();
     });
     $('#submitBtn').on('click', function () {
       if (submit) {
@@ -46,7 +46,7 @@ block js
       $.ajax({
         type: 'post',
         data: $('#form').serializeArray(),
-        url: "/users/",
+        url: "users/",
         dataType: 'json',
         success: function (data) {
           if (data.status == "OK") {
