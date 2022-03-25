@@ -2,6 +2,110 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/shm-open/code-push-server/compare/v2.1.0...v2.1.1) (2022-03-23)
+
+
+### Bug Fixes
+
+* zh locale support ([6a55bc5](https://github.com/shm-open/code-push-server/commit/6a55bc57f0b28d9b0000a886dc302e6772719ea0))
+
+## [2.1.0](https://github.com/shm-open/code-push-server/compare/v2.0.3...v2.1.0) (2022-03-23)
+
+
+### Features
+
+* **app:** add i18n support ([57a6e98](https://github.com/shm-open/code-push-server/commit/57a6e98df10bfcfc14badd3b4a399815e3c4349a))
+
+
+### Bug Fixes
+
+* **deps:** update dependency aws-sdk to v2.1098.0 ([381f51a](https://github.com/shm-open/code-push-server/commit/381f51a6bc6b5a85945bf2caac1b48e4b875c189))
+* **deps:** update dependency nodemailer to v6.7.3 ([154af3c](https://github.com/shm-open/code-push-server/commit/154af3c526ce000c3678627502c66c54f6bd6883))
+* **deps:** update dependency yargs to v17.4.0 ([763c924](https://github.com/shm-open/code-push-server/commit/763c924ee0a77db170ef307f0726f36da7e5ac0b))
+
+### [2.0.3](https://github.com/shm-open/code-push-server/compare/v2.0.2...v2.0.3) (2022-03-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency aws-sdk to v2.1089.0 ([2a40892](https://github.com/shm-open/code-push-server/commit/2a40892edcd945158b9ebb1c5b8f73942fabe4bf))
+* **deps:** update dependency fs-extra to v10.0.1 ([6e20737](https://github.com/shm-open/code-push-server/commit/6e207378305bdc3e9f0258a91a2074cbff0c608a))
+* **deps:** update dependency redis to v4.0.4 ([23e984a](https://github.com/shm-open/code-push-server/commit/23e984a7662a7cc365d3402cba1ee809d4602298))
+* **deps:** update dependency sequelize to v6.17.0 ([dd255d9](https://github.com/shm-open/code-push-server/commit/dd255d976f1e2cd3e3d965580b900cb7f99f738a))
+
+### [2.0.2](https://github.com/shm-open/code-push-server/compare/v2.0.1...v2.0.2) (2022-02-21)
+
+
+### Bug Fixes
+
+* log stringified account info ([85a09fa](https://github.com/shm-open/code-push-server/commit/85a09fad62bd21808461debba7140e1732851622))
+
+### [2.0.1](https://github.com/shm-open/code-push-server/compare/v2.0.0...v2.0.1) (2022-02-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency aws-sdk to v2.1077.0 ([fd22283](https://github.com/shm-open/code-push-server/commit/fd22283882e2462423bc25efa27c6b707957b41e))
+* **deps:** update dependency body-parser to v1.19.2 ([19d8acd](https://github.com/shm-open/code-push-server/commit/19d8acd994538cb683dc319e0f0aa164c75a882f))
+* **deps:** update dependency express to v4.17.3 ([915fd25](https://github.com/shm-open/code-push-server/commit/915fd25fedff2246d93c051bc7a56db52cbd61b7))
+* **deps:** update dependency kv-logger to v0.5.3 ([e7d2e0f](https://github.com/shm-open/code-push-server/commit/e7d2e0f28e1989227582505397139e0db617424d))
+* **deps:** update dependency sequelize to v6.16.2 ([ceb3e3e](https://github.com/shm-open/code-push-server/commit/ceb3e3ebac22983805d5dfa992c27c03f3da2f1f))
+* **deps:** update kv-logger to 0.5.1 ([6289835](https://github.com/shm-open/code-push-server/commit/6289835990e1ae964378fc28d2037d1ce752107a))
+* **deps:** update kv-logger to 0.5.2 and fix build issue ([cae80fe](https://github.com/shm-open/code-push-server/commit/cae80fe5ba00c920b79df3422fb8c86424a6dc07))
+* put x-request-id to res header ([e9c13a5](https://github.com/shm-open/code-push-server/commit/e9c13a5ea6cb48e8338cb3314312fce51587b631))
+
+## [2.0.0](https://github.com/shm-open/code-push-server/compare/v1.2.0...v2.0.0) (2022-02-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop is_use_diff_text support
+* drop codePushWeb redirect support
+* drop upyun support
+* drop CONFIG_FILE support, please use env variable config items
+
+### Features
+
+* drop upyun support ([57bbdc5](https://github.com/shm-open/code-push-server/commit/57bbdc58d7c9174f4d00ad9ec1525f5f828e00b4))
+
+
+### Bug Fixes
+
+* **deps:** update dependency aws-sdk to v2.1072.0 ([82f41e0](https://github.com/shm-open/code-push-server/commit/82f41e0e347802a851534af3d9558fe1a3919936))
+* **deps:** update dependency sequelize to v6.16.0 ([e3bb1e4](https://github.com/shm-open/code-push-server/commit/e3bb1e4f223f9a43430318fe20fc1af759c30721))
+* **deps:** update dependency sequelize to v6.16.1 ([568a5b0](https://github.com/shm-open/code-push-server/commit/568a5b02b280eb9211948a4d6a7380efac33d199))
+* update deps redis to v4, reuse the same redis client without quit ([98c2ca6](https://github.com/shm-open/code-push-server/commit/98c2ca60a3285353c9ce3cdab5f8eee1b9deffba))
+
+
+* drop codePushWeb redirect support ([255ea15](https://github.com/shm-open/code-push-server/commit/255ea1530aba7a57c66e0e304fa6c7b23485f219))
+* turn package-manager to ts ([e067aed](https://github.com/shm-open/code-push-server/commit/e067aed251a5376bc437502c9ceee86f9408988e))
+* turn top level app/www to ts ([76d8898](https://github.com/shm-open/code-push-server/commit/76d8898e563bbf52361b87b615bf7c13f40409e0))
+
+## [1.2.0](https://github.com/shm-open/code-push-server/compare/v1.1.1...v1.2.0) (2022-02-08)
+
+
+### Features
+
+* add typescript support ([6b1a5d7](https://github.com/shm-open/code-push-server/commit/6b1a5d7d8d836ab804f32c3931f4c57bde5f5dde))
+
+
+### Bug Fixes
+
+* add more info logs for account/app management ([4e45c7e](https://github.com/shm-open/code-push-server/commit/4e45c7e651c503383e6bb659397d27b3a3c76809))
+* **deps:** update dependency aws-sdk to v2.1062.0 ([9a62e4a](https://github.com/shm-open/code-push-server/commit/9a62e4a93855b233befedd6fbcd8aec47fd9d61d))
+* **deps:** update dependency body-parser to v1.19.1 ([1173672](https://github.com/shm-open/code-push-server/commit/117367240a63028eebd992161a354d1404827fd6))
+* **deps:** update dependency cos-nodejs-sdk-v5 to v2.11.6 ([4e570d6](https://github.com/shm-open/code-push-server/commit/4e570d646b3bae386280aa02cab6b7f58d504d1a))
+* **deps:** update dependency express to v4.17.2 ([59a9cd3](https://github.com/shm-open/code-push-server/commit/59a9cd3e4a871c38e024986fb46ba98d457dd617))
+* **deps:** update dependency helmet to v5 ([ffff5da](https://github.com/shm-open/code-push-server/commit/ffff5dab25bb001e5772bfe7c189e337fe108aaa))
+* **deps:** update dependency helmet to v5.0.2 ([b601ee7](https://github.com/shm-open/code-push-server/commit/b601ee763f9ed49417ac97f51c50bcded62ce2ca))
+* **deps:** update dependency node-fetch to v2.6.7 ([2bcaa19](https://github.com/shm-open/code-push-server/commit/2bcaa1992f2a2d6e00595728ee4b07edbfb1b727))
+* **deps:** update dependency nodemailer to v6.7.2 ([58a2af0](https://github.com/shm-open/code-push-server/commit/58a2af07a8d23fd2930b4745c28456f50bae16eb))
+* **deps:** update dependency sequelize to v6.12.4 ([5ec26ae](https://github.com/shm-open/code-push-server/commit/5ec26aed33f2eac595ee9e4de26f0eb5dfc28440))
+* **deps:** update dependency sequelize to v6.14.0 ([1786ca2](https://github.com/shm-open/code-push-server/commit/1786ca20b637bc5562aa99b30b4404bbbb89a651))
+* **deps:** update dependency yargs to v17.3.1 ([a099f8c](https://github.com/shm-open/code-push-server/commit/a099f8c162a84341b543eeba3683f7afaf067a00))
+* replace log4js with simple kv-logger ([7e1829e](https://github.com/shm-open/code-push-server/commit/7e1829edac2886e1370590696b7815fb922b7b47))
+* simplify redis config ([deefe90](https://github.com/shm-open/code-push-server/commit/deefe90fd373fd3a7ce0a9d35321b7f32eed724e))
+
 ### [1.1.1](https://github.com/shm-open/code-push-server/compare/v1.1.0...v1.1.1) (2021-11-23)
 
 

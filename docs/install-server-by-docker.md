@@ -1,75 +1,77 @@
-# docker 部署 code-push-server
+# docker deploy code-push-server
 
-> 该文档用于描述 docker 部署 code-push-server，实例包含三个部分
+[[Chinese version 中文版]](./install-server-by-docker.cn.md)
 
--   code-push-server 部分
-    -   更新包默认采用`local`存储(即存储在本地机器上)。使用 docker volume 存储方式，容器销毁不会导致数据丢失，除非人为删除 volume。
-    -   内部使用 pm2 cluster 模式管理进程，默认开启进程数为 cpu 数，可以根据自己机器配置设置 docker-compose.yml 文件中 deploy 参数。
-    -   docker-compose.yml 只提供了应用的一部分参数设置，如需要设置其他配置，可以修改文件 config.js。
--   mysql 部分
-    -   数据使用 docker volume 存储方式，容器销毁不会导致数据丢失，除非人为删除 volume。
-    -   应用请勿使用 root 用户，为了安全可以创建权限相对较小的权限供 code-push-server 使用，只需要给予`select,update,insert`权限即可。初始化数据库需要使用 root 或有建表权限用户
--   redis 部分
-    -   `tryLoginTimes` 登录错误次数限制
-    -   `updateCheckCache` 提升应用性能
-    -   `rolloutClientUniqueIdCache` 灰度发布
+> This document is used to describe docker deployment code-push-server, the example consists of three parts
 
-## 安装 docker
+- code-push-server section
+    - Update packages are stored in `local` by default (i.e. stored on the local machine). Using the docker volume storage method, container destruction will not cause data loss unless the volume is manually deleted.
+    - The pm2 cluster mode is used to manage processes internally. The default number of open processes is the number of cpus. You can set the deploy parameter in the docker-compose.yml file according to your own machine configuration.
+    - docker-compose.yml only provides some parameter settings of the application. If you need to set other configurations, you can modify the file config.js.
+- mysql section
+    - Data is stored using docker volume, and container destruction will not cause data loss unless the volume is manually deleted.
+    - Do not use the root user for the application. For security, you can create permissions with relatively small permissions for use by code-push-server. You only need to give `select, update, insert` permissions. To initialize the database, you need to use root or a user with table building privileges
+- redis part
+    - `tryLoginTimes` login error limit
+    - `updateCheckCache` improves application performance
+    - `rolloutClientUniqueIdCache` grayscale release
 
-参考 docker 官方安装教程
+## Install Docker
 
--   [>>mac 点这里](https://docs.docker.com/docker-for-mac/install/)
--   [>>windows 点这里](https://docs.docker.com/docker-for-windows/install/)
--   [>>linux 点这里](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+Refer to the official Docker installation tutorial
 
-`$ docker info` 能成功输出相关信息，则安装成功，才能继续下面步骤
+- [>>mac click here](https://docs.docker.com/docker-for-mac/install/)
+- [>>windows click here](https://docs.docker.com/docker-for-windows/install/)
+- [>>linux click here](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
-## 获取代码
+`$ docker info` can successfully output relevant information, the installation is successful, and the following steps can be continued
+
+## get code
 
 ```shell
 $ git clone https://github.com/shm-open/code-push-server.git
 $ cd code-push-server
-```
+````
 
-## 修改配置文件
+## Modify the configuration file
 
 ```shell
 $ vim docker-compose.yml
-```
+````
 
-_将`DOWNLOAD_URL`中`YOUR_MACHINE_IP`替换成本机外网 ip 或者域名_
+_Replace `YOUR_MACHINE_IP` in `DOWNLOAD_URL` with your own external network ip or domain name_
 
-### jwt.tokenSecret 修改
+### jwt.tokenSecret modification
 
-> code-push-server 验证登录验证方式使用的 json web token 加密方式,该对称加密算法是公开的，所以修改 config.js 中 tokenSecret 值很重要。
+> code-push-server verifies the json web token encryption method used by the login authentication method. The symmetric encryption algorithm is public, so it is very important to modify the tokenSecret value in config.js.
 
-_非常重要！非常重要！ 非常重要！_
+_Very important! Very important! Very important! _
 
-> 可以打开连接`https://www.grc.com/passwords.htm`获取 `63 random alpha-numeric characters`类型的随机生成数作为密钥
+> You can open the connection `https://www.grc.com/passwords.htm` to obtain a randomly generated number of type `63 random alpha-numeric characters` as the key
 
-_将`TOKEN_SECRET`中`YOUR_JWT_TOKEN_SECRET`替换成密钥_
+_Replace `YOUR_JWT_TOKEN_SECRET` in `TOKEN_SECRET` with the key_
 
-## 部署
+## deploy
 
 ```shell
 $ docker-compose up -d
-```
+````
 
-> 如果网速不佳，需要漫长而耐心的等待。。。去和妹子聊会天吧^\_^
+> If the internet speed is not good, a long and patient wait is required. . . Let's chat with the girl for a while ^\_^
 
-## 查看进展
+## View progress
 
 ```shell
 $ docker-compose ps
-```
+````
 
-## 访问接口简单验证
+## Access interface simple verification
 
 `$ curl -I http://YOUR_CODE_PUSH_SERVER_IP:3000/`
 
-返回`200 OK`
+returns `200 OK`
 
-```http
+````http
 HTTP/1.1 200 OK
 X-DNS-Prefetch-Control: off
 X-Frame-Options: SAMEORIGIN
@@ -82,36 +84,36 @@ Content-Length: 592
 ETag: W/"250-IiCMcM1ZUFSswSYCU0KeFYFEMO8"
 Date: Sat, 25 Aug 2018 15:45:46 GMT
 Connection: keep-alive
-```
+````
 
-## 浏览器登录
+## Browser login
 
-> 默认用户名:admin 密码:123456 记得要修改默认密码哦
-> 如果登录连续输错密码超过一定次数，会限定无法再登录. 需要清空 redis 缓存
+> Default username: admin Password: 123456 Remember to change the default password
+> If you log in and enter the wrong password for more than a certain number of times, you will no longer be able to log in. You need to clear the redis cache
 
 ```shell
-$ docker exec -it code-push-server_redis_1 redis-cli  # 进入redis
+$ docker exec -it code-push-server_redis_1 redis-cli # Enter redis
 > flushall
 > quit
-```
+````
 
-## 查看服务日志
+## View service log
 
 ```shell
 $ docker-compose logs server
-```
+````
 
-## 查看存储 `docker volume ls`
+## View storage `docker volume ls`
 
-| DRIVER | VOLUME NAME                   | 描述                           |
-| ------ | ----------------------------- | ------------------------------ |
-| local  | code-push-server_data-mysql   | 数据库存储数据目录             |
-| local  | code-push-server_data-storage | 存储打包文件目录               |
-| local  | code-push-server_data-tmp     | 用于计算更新包差异文件临时目录 |
-| local  | code-push-server_data-redis   | redis 落地数据                 |
+| DRIVER | VOLUME NAME | DESCRIPTION |
+| ------ | ----------------------------- | ------------ ------------------ |
+| local | code-push-server_data-mysql | database storage data directory |
+| local | code-push-server_data-storage | Storage package file directory |
+| local | code-push-server_data-tmp | Temporary directory for calculating update package difference files |
+| local | code-push-server_data-redis | redis landing data |
 
-## 销毁退出应用
+## destroy exit application
 
-```bash
+```shell
 $ docker-compose down
 ```

@@ -1,11 +1,16 @@
-extends layout
-block css
-  link(rel='stylesheet', href='/stylesheets/index.css')
+extends common
 
 block content
-  .site-notice CodePush Server
+  .site-notice react native / cordova #{__('hot update server')}
   h1(style="text-align: center;")= title
   p(style="text-align: center;") Welcome to #{title}
   .site-notice
-    a.btn.btn-primary(href="/auth/login" type="button") Log In
-    a.btn.btn-primary.col-md-offset-1(href="/auth/password" type="button") Change Password
+    a.btn.btn-primary(href="/tokens" type="button") #{__('Obtain')} token
+    a.btn.btn-primary.col-md-offset-1(href="/auth/password" type="button") #{__('Change Password')}
+    a#logoutBtn.btn.btn-primary.col-md-offset-1(href="#" type="button") #{__('Logout')}
+
+block js
+  script().
+    ensureLogin();
+
+    $('#logoutBtn').on('click', logout);
