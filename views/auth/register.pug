@@ -1,4 +1,5 @@
-extends ../layout
+extends ../common
+
 block css
   link(rel='stylesheet', href='/stylesheets/signin.css')
 
@@ -27,7 +28,6 @@ block js
         success: function (data) {
             if (data.status == "OK") {
               let email = $('#inputEmail').val();
-              sessionStorage.setItem('email', email);
               location.href = '/auth/confirm?email=' + email;
               submit = false;
             } else {

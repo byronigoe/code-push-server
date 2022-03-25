@@ -60,6 +60,8 @@ Create your own account by visiting https://your-server.com/auth/register (in co
 
 # Feature Roadmap
 
+-   [modify password](https://github.com/lisong/code-push-server/issues/43)
+-   [code-push-server normal solution (CN)](https://github.com/lisong/code-push-server/issues/135)
 -   targetBinaryVersion support
     -   `*`
     -   `1.2.3`
@@ -68,15 +70,3 @@ Create your own account by visiting https://your-server.com/auth/register (in co
     -   `>=1.2.3 <1.2.7`
     -   `~1.2.3`
     -   `^1.2.3`
-
-## Advance Feature
-
-> use google diff-match-patch calculate text file diff patch
-
--   support iOS and Android
--   use `"react-native-code-push": "git+https://git@github.com/lisong/react-native-code-push.git"` instead `"react-native-code-push": "x.x.x"` in `package.json`
--   change `apps`.`is_use_diff_text` to `1` in mysql codepush database
-
-## License
-
-MIT License [read](https://github.com/lisong/code-push-server/blob/master/LICENSE)

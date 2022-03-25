@@ -1,5 +1,7 @@
 FROM node:lts-alpine
 
+ARG VERSION latest
+
 RUN npm install -g @shm-open/code-push-server@${VERSION} pm2@latest --no-optional
 
 RUN mkdir /data/

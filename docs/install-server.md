@@ -1,16 +1,16 @@
-## INSTALL NODE AND NPM
+## Install Node and NPM
 
 [Node Downloads](https://nodejs.org/en/download/)
 
 > (choose latest LTS version)
 
-## INSTALL PM2
+## Install PM2
 
 ```bash
 $ sudo npm i -g pm2
 ```
 
-## INSTALL MYSQL
+## Install MySQL
 
 -   [Linux](https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html)
 -   [macOS](https://dev.mysql.com/doc/refman/8.0/en/osx-installation.html)
@@ -19,13 +19,11 @@ $ sudo npm i -g pm2
 
 > notice. mysql8.x default auth caching_sha2_pasword not support in node-mysql2 see [issue](https://github.com/mysqljs/mysql/pull/1962)
 
-## GET code-push-server FROM NPM
+## Install Redis
 
-```shell
-$ npm install byronigoe/code-push-server -g
-```
+-   [Redis Quick Start](https://redis.io/topics/quickstart)
 
-## GET code-push-server FROM SOURCE CODE
+## Get code-push-server from NPM
 
 ```shell
 $ git clone https://github.com/byronigoe/code-push-server.git
@@ -76,7 +74,9 @@ $ ./bin/db init --dbhost "your mysql host" --dbport "your mysql port" --dbname "
 
 > output: success
 
-## CONFIGURE for code-push-server
+## Configure code-push-server
+
+check out the supported config items in [config.ts](../src/core/config.ts)
 
 Save the file [config.js](https://github.com/byronigoe/code-push-server/blob/master/config/config.js) and modify the properties, or set the corresponding environment variables (e.g. in process.json).
 
@@ -102,19 +102,19 @@ Some configuration properties have to change:
 $ pm2 start process.json
 ```
 
-## RESTART SERVICE
+## Restart Service
 
 ```shell
 $ pm2 reload process.json
 ```
 
-## STOP SERVICE
+## Stop Service
 
 ```shell
 $ pm2 stop process.json
 ```
 
-## CHECK SERVICE IS OK
+## Check Service is OK
 
 ```shell
 $ curl -I https://your-server.com/
@@ -145,12 +145,10 @@ Connection: keep-alive
 -   `rolloutClientUniqueIdCache`
 -   `tryLoginTimes`
 
-## UPGRADE
-
-_from npm package_
+## Upgrade from old version
 
 ```shell
-$ npm install -g code-push-server@latest
+$ npm install -g @shm-open/code-push-server@latest
 $ code-push-server-db upgrade --dbhost "your mysql host" --dbport "your mysql port"  --dbuser "your mysql user" --dbpassword "your mysql password" # upgrade codepush database
 $ pm2 restart code-push-server # restart service
 ```
@@ -187,7 +185,7 @@ $ tail -f "output file path"
 
 ## [code-push-cli](https://github.com/byronigoe/code-push-cli)
 
-> Use code-push-cli manager CodePushServer
+> Use code-push-cli manage CodePush Server
 
 ```shell
 $ npm install https://github.com/byronigoe/code-push-cli@latest -g

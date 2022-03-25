@@ -1,4 +1,5 @@
-extends ../layout
+extends ../common
+
 block css
   link(rel='stylesheet', href='/stylesheets/signin.css')
 
@@ -30,13 +31,11 @@ block content
             button#okBtn.btn.btn-primary(type="button" data-dismiss="modal") OK
 block js
   script().
-    var submit = false;
-    $('#inputEmail').on('click', function () {
-      location.href = '/auth/register?email=' + $('#inputEmail').val();
-    });
     $('#okBtn').on('click', function () {
       location.href = '/auth/login?email=' + $('#inputEmail').val();
     });
+
+    var submit = false;
     $('#submitBtn').on('click', function () {
       if (submit) {
         return ;
