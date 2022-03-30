@@ -153,7 +153,7 @@ class DeploymentsManager {
         }
         return {
             description: packageVersion.packageInfo.description,
-            isDisabled: false,
+            isDisabled: packageVersion.packageInfo.is_disabled === 1,
             isMandatory: packageVersion.packageInfo.is_mandatory === 1,
             rollout: 100,
             appVersion: packageVersion.deploymentsVersions.app_version,
