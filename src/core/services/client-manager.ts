@@ -201,17 +201,7 @@ class ClientManager {
                         max_version: { [Op.gt]: version },
                     },
                 }).then((deploymentsVersionsMore) => {
-                    let distance = 0;
-                    let item = null;
-                    _.map(deploymentsVersionsMore, (value, index) => {
-                        if (index === 0) {
-                            item = value;
-                            distance = value.max_version - value.min_version;
-                        } else if (distance > value.max_version - value.min_version) {
-                            distance = value.max_version - value.min_version;
-                            item = value;
-                        }
-                    });
+                    let item = _.sortBy(deploymentsVersionsMore, 'created_at').reverse()[0];
                     logger.debug({
                         item,
                     });
