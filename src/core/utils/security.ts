@@ -57,8 +57,8 @@ function stringSha256Sync(contents: string) {
     return sha256.digest('hex');
 }
 
-function sortJsonToArr(json) {
-    const rs = [];
+function sortJsonToArr(json: Record<string, string>) {
+    const rs: { path: string; hash: string }[] = [];
     _.forIn(json, (value, key) => {
         rs.push({ path: key, hash: value });
     });
@@ -67,7 +67,7 @@ function sortJsonToArr(json) {
 
 // some files are ignored in calc hash in client sdk
 // https://github.com/Microsoft/react-native-code-push/pull/974/files#diff-21b650f88429c071b217d46243875987R15
-function isHashIgnored(relativePath) {
+function isHashIgnored(relativePath: string) {
     if (!relativePath) {
         return true;
     }
@@ -97,7 +97,7 @@ function isPackageHashIgnored(relativePath: string) {
     );
 }
 
-export function packageHashSync(jsonData) {
+export function packageHashSync(jsonData: Record<string, string>) {
     const sortedArr = sortJsonToArr(jsonData);
     const manifestData = _.filter(sortedArr, (v) => {
         return !isPackageHashIgnored(v.path);
@@ -130,7 +130,7 @@ function sha256AllFiles(files: string[]): Promise<Record<string, string>> {
 }
 
 export function uploadPackageType(directoryPath: string) {
-    return new Promise((resolve, reject) => {
+    return new Promise<number>((resolve, reject) => {
         recursive(directoryPath, (err, files) => {
             if (err) {
                 logger.error(new AppError(err.message));
@@ -183,10 +183,6 @@ export function calcAllFileSha256(directoryPath: string): Promise<Record<string,
                         const data: Record<string, string> = {};
                         _.forIn(results, (value, key) => {
                             let relativePath = path.relative(directoryPath, key);
-                            const matchresult = relativePath.match(/(\/|\\).*/);
-                            if (matchresult) {
-                                relativePath = path.join('CodePush', matchresult[0]);
-                            }
                             relativePath = slash(relativePath);
                             data[relativePath] = value;
                         });

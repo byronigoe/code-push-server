@@ -1,4 +1,5 @@
 /* eslint-disable max-lines */
+import { EventEmitter } from 'events';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -226,6 +227,9 @@ class PackageManager {
             const zipFile = new yazl.ZipFile();
             const writeStream = fs.createWriteStream(fileName);
             writeStream.on('error', (error) => {
+                reject(error);
+            });
+            (zipFile as unknown as EventEmitter).on('error', (error) => {
                 reject(error);
             });
             zipFile.outputStream
